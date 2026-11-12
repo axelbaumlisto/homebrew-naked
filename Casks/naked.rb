@@ -14,6 +14,11 @@ cask "naked" do
   end
 
   depends_on macos: ">= :monterey"
+  # The DMG carries an arm64-only binary (measured on 0.1.0-beta.3: `file` on
+  # Contents/MacOS/naked → Mach-O 64-bit executable arm64). Without this line an
+  # Intel Mac gets an app that cannot start, and the failure lands on the person
+  # instead of on Homebrew. Drop it only when a universal (or x86_64) DMG ships.
+  depends_on arch: :arm64
 
   app "naked.app"
 
